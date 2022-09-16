@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('/search', function () {
+    return view('auth.register');
+});
