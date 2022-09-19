@@ -9,4 +9,8 @@ class Course extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'name',
+        'price',
+    ];
 }
