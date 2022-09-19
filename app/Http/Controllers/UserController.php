@@ -94,4 +94,9 @@ class UserController extends Controller
         $trainer = User::find($trainer_id);
         return response()->json($trainer->courses);
     }
+    public function get_one_user($id)
+    {
+        $user = User::find($id);
+        return $user;
+    }
 }

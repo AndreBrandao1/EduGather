@@ -16,8 +16,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            ['cat_title' => 'IT', 'cat_description' => 'a nice filled category', 'cat_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
+        DB::table('categories')->insert([['cat_title' => '', '' => '', 'cat_logo' => ''],
             ['cat_title' => 'managment', 'cat_description' => 'a nice filled category', 'cat_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
             ['cat_title' => 'financce', 'cat_description' => 'a nice filled category', 'cat_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
             ['cat_title' => 'cat1', 'cat_description' => 'a nice filled category', 'cat_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
