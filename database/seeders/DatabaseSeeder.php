@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             CatTagSeeder::class,
             CourseSeeder::class,
             CourseTagSeeder::class,
+            LanguageSeeder::class,
+            LanguageCourseSeeder::class,
         ]);
     }
 }

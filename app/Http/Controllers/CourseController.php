@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
+use App\Models\Category;
+use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -55,7 +61,16 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::find($id);
-        return response()->json($course);
+        $cat_id = $course->cat_id;
+        $category = Category::find($cat_id);
+        $user_id = $course->user_id;
+        $user = User::find($user_id);
+        $tags = DB::table('tags')->join('course_tag', 'tags.id', '=', 'course_tag.tag_id')->select('tags.*')->where('course_tag.course_id', '=', $course->id)->get();
+        $languages = DB::table('languages')->join('language_course', 'languages.id', '=', 'language_course.course_id')->select('languages.*')->where('language_course.course_id', '=', $course->id)->get();
+
+        $data = ['course' => $course, "category" => $category, "user" => $user, 'tags' => $tags, 'languages' => $languages];
+
+        return response()->json($data);
     }
 
     /**
