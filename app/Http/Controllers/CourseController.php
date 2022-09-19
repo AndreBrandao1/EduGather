@@ -41,12 +41,13 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Course  $course
+     * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $course = Course::find($id);
+        return response()->json($course);
     }
 
     /**
@@ -82,4 +83,6 @@ class CourseController extends Controller
     {
         //
     }
+
+   
 }

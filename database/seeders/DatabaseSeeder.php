@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             CatTagSeeder::class,
             CourseSeeder::class,
+            CourseTagSeeder::class,
         ]);
     }
 }
