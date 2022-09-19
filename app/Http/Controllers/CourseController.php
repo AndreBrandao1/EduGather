@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -35,7 +36,14 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id = auth()->user()->id;
+        $course = Course::create([
+            "cou_title" => $request->cou_title,
+            "cou_description" => $request->cou_description,
+            "cou_logo" => $request->cou_logo,
+            "user_id" => $user_id,
+            "cat_id" => $request->cat_id
+        ]);
     }
 
     /**
@@ -83,6 +91,4 @@ class CourseController extends Controller
     {
         //
     }
-
-   
 }

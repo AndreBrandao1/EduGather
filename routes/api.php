@@ -8,6 +8,7 @@ use Database\Factories\CourseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Models\Course;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,4 @@ Route::get('/categories', [CategoryController::class, 'get_categories']);
 Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
 Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
 Route::get('/course{id}', [CourseController::class, 'show']);
+Route::post('insert_course', [CourseController::class, 'store']);
