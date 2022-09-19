@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('cou_title');
             $table->string('cou_description');
             $table->string('cou_logo');
-            $table->unsignedBigInteger('trainer_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_id');
             $table->enum('cou_statue', ['on_hold', 'verified', 'denied']);
-            $table->foreign('trainer_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('cat_id')->references('id')->on('categories');
         });
     }

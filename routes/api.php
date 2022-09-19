@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Database\Factories\CourseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +24,7 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::get('/search', [CourseController::class, 'index']);
+Route::get('/tags', [TagController::class, 'get_tags']);
+Route::get('/categories', [CategoryController::class, 'get_categories']);
+Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
+Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
