@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +41,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
         //
     }
@@ -53,10 +52,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +64,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,30 +75,23 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
     }
-    /**
-     * @return all the categories
-     */
-    public function get_categories()
-    {
-        return response()->json(Category::all());
-    }
 
     /**
-     * @param $id of the category
-     * @return all the tags of a spesific category
+     * Display a listing of the courses which are done by a specific trainer which is a user.
+     *
+     * @param $trainer_id
+     * @return \Illuminate\Http\Response
      */
-    public function get_categoy_tags($id)
+    public function get_courses($trainer_id)
     {
-        $category = Category::find($id);
-        return response()->json($category->category_tag);
+        $trainer = User::find($trainer_id);
+        return response()->json($trainer->courses);
     }
-
-    
 }

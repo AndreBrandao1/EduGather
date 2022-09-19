@@ -16,18 +16,18 @@ class CatTagSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories_tags')->insert([
-            ['cat_id' => 1, 'tag_id' => 1],
-            ['cat_id' => 1, 'tag_id' => 3],
-            ['cat_id' => 1, 'tag_id' => 4],
-            ['cat_id' => 2, 'tag_id' => 5],
-            ['cat_id' => 2, 'tag_id' => 3],
-            ['cat_id' => 3, 'tag_id' => 7],
-            ['cat_id' => 4, 'tag_id' => 8],
-            ['cat_id' => 2, 'tag_id' => 9],
-            ['cat_id' => 3, 'tag_id' => 10],
-            ['cat_id' => 4, 'tag_id' => 3],
-            ['cat_id' => 1, 'tag_id' => 2]
+        DB::table('category_tag')->insert([
+            ['category_id' => 1, 'tag_id' => 1],
+            ['category_id' => 1, 'tag_id' => 3],
+            ['category_id' => 1, 'tag_id' => 4],
+            ['category_id' => 2, 'tag_id' => 5],
+            ['category_id' => 2, 'tag_id' => 3],
+            ['category_id' => 3, 'tag_id' => 7],
+            ['category_id' => 4, 'tag_id' => 8],
+            ['category_id' => 2, 'tag_id' => 9],
+            ['category_id' => 3, 'tag_id' => 10],
+            ['category_id' => 4, 'tag_id' => 3],
+            ['category_id' => 1, 'tag_id' => 2]
         ]);
     }
 }
