@@ -15,5 +15,6 @@ class Course extends Model
         "cou_logo",
         "user_id",
         "cat_id",
+        "cou_statue"
     ];
 }
