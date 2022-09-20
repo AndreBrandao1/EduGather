@@ -185,7 +185,7 @@ class CourseController extends Controller
             $course_id = $entry->{'course_id'};
             $tag = array(
                 "tag_id" => $entry->{'tag_id'},
-                "tag-title" => $entry->{'tag_title'}
+                "tag_title" => $entry->{'tag_title'}
             );
             if (!isset($tags_by_course->{$course_id})) {
                 $tags_by_course->{$course_id} = array();
@@ -210,7 +210,7 @@ class CourseController extends Controller
         }
 
 
-        $courses = DB::select(DB::raw("SELECT courses.id, cou_logo, cou_statue, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
+        $courses = DB::select(DB::raw("SELECT courses.id, cou_logo, cou_statue, cou_description, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
             FROM courses 
             LEFT JOIN users ON courses.user_id = users.id
             LEFT JOIN categories ON courses.cat_id = categories.id"));
