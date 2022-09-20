@@ -93,7 +93,7 @@ class LanguageController extends Controller
      */
     public function get_all()
     {
-
+        // get the tags
         $tags = DB::select(DB::raw(
             "SELECT courses.id AS course_id, tags.id AS tag_id, tags.tag_title, users.id As user_id, users.first_name, users.last_name
         FROM tags
@@ -112,6 +112,24 @@ class LanguageController extends Controller
                 $tags_by_course->{$course_id} = array();
             }
             $tags_by_course->{$course_id}[] = $tag;
+        }
+
+        //get the languages
+        $D_languages = DB::select(DB::raw("SELECT courses.id AS course_id, languages.id AS language_id, languages.lan_title
+                FROM languages
+                LEFT JOIN language_course ON languages.id=language_course.language_id
+                LEFT JOIN courses ON courses.id=language_course.course_id"));
+        $languages_by_course = (object)[];
+        foreach ($D_languages as $entry) {
+            $course_id = $entry->{'course_id'};
+            $language = array(
+                "lan_id" => $entry->{'language_id'},
+                "lan_title" => $entry->{'lan_title'},
+            );
+            if (!isset($languages_by_course->{$course_id})) {
+                $languages_by_course->{$course_id} = array();
+            }
+            $languages_by_course->{$course_id}[] = $language;
         }
 
 
@@ -141,7 +159,8 @@ class LanguageController extends Controller
                 'user_id' => $entry->{'user_id'},
                 'user_first_name' => $entry->{'first_name'},
                 'user_last_name' => $entry->{'last_name'},
-                'tags' => $tags_by_course->{$course_id}
+                'tags' => $tags_by_course->{$course_id},
+                'languages' => $languages_by_course->{$course_id}
             );
             if (!isset($courses_by_lan->{$lan_id})) {
                 $courses_by_lan->{$lan_id} = array();
