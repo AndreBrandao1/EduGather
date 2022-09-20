@@ -229,4 +229,46 @@ class CourseController extends Controller
         }
         return response()->json($courses);
     }
+
+
+    public function serve_courses()
+    {
+        $data = DB::select(DB::raw("
+        SELECT 
+TCRS.*,
+LCRS.*,
+CRS.cou_title as \"cou_title\",
+CRS.cou_description as \"cou_description\",
+CRS.cou_logo as \"cou_logo\",
+CRS.user_id as \"user_id\",
+USR.first_name as \"first_name\",
+USR.last_name as \"last_name\",
+CATA.id as \"cat_id\",
+CATA.cat_title as \"cat_title\",
+CATA.cat_description as \"cat_description\",
+CATA.cat_logo as \"cat_logo\"
+
+
+	FROM (SELECT
+	TAG.id as \"tag_id\",
+    TAG.tag_title as \"tag_title\",
+    TAG.tag_logo as \"tag_logo\",
+    TAG.tag_description as \"tag_description\",
+    CT.course_id as \"course_id\"
+	FROM tags AS TAG
+		LEFT JOIN course_tag AS CT ON TAG.id = CT.tag_id) AS TCRS
+    LEFT JOIN (SELECT
+	LAN.id as \"lan_id\",
+    LAN.lan_title as \"lan_title\",
+    LAN.lan_logo as \"lan_logo\",
+    LAN.lan_description as \"lan_description\",
+    LN.course_id as \"course_id\"
+	FROM languages AS LAN
+		LEFT JOIN language_course AS LN ON LAN.id = LN.language_id) AS LCRS ON TCRS.course_id= LCRS.course_id
+        LEFT JOIN courses AS CRS ON CRS.id = TCRS.course_id
+        LEFT JOIN users AS USR ON USR.id = CRS.user_id
+        LEFT JOIN categories AS CATA ON CATA.id = CRS.cat_id
+        "));;
+        return response()->json($data);
+    }
 }
