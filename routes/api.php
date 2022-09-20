@@ -34,7 +34,8 @@ Route::get('/tags', [TagController::class, 'get_tags']);
 Route::get('/categories', [CategoryController::class, 'get_categories']);
 Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
 Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
-Route::get('/course{id}', [CourseController::class, 'show']);
+Route::get('/course/{id}', [CourseController::class, 'show']);
 
-
+Route::get('/tags', [CourseController::class, 'index']);
+Route::get('/courses', [CourseController::class, 'get_all']);
 Route::post('insert_course', [CourseController::class, 'store']);
