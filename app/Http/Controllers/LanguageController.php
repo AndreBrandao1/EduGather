@@ -136,10 +136,9 @@ class LanguageController extends Controller
 
         //get the courses then sorte them according to the languages
         $courses = DB::select(DB::raw(
-            "SELECT L.id AS lan_id, C.id AS cou_id, C.cou_title, C.cou_description, C.cou_logo,categories.id AS cat_id,categories.cat_title, categories.cat_logo, U.id AS user_id, U.first_name, U.last_name
+            "SELECT LC.language_id AS lan_id, C.id AS cou_id, C.cou_title, C.cou_description, C.cou_logo,categories.id AS cat_id,categories.cat_title, categories.cat_logo, U.id AS user_id, U.first_name, U.last_name
             From courses AS C
                    LEFT JOIN language_course AS LC ON LC.course_id = C.id
-                LEFT JOIN languages AS L ON LC.language_id = L.id
                 LEFT JOIN categories ON C.cat_id = categories.id
                 LEFT JOIN users AS U ON U.id = C.user_id"
         ));
@@ -147,7 +146,8 @@ class LanguageController extends Controller
 
         $courses_by_lan = (object)[];
         foreach ($courses as $entry) {
-            $lan_id = $entry->{'cou_id'};
+            $lan_id = $entry->{'lan_id'};
+            $course_id = $entry->{'cou_id'};
             $course = array(
                 'cou_id' => $entry->{'cou_id'},
                 'cou_title' => $entry->{'cou_title'},
@@ -159,13 +159,21 @@ class LanguageController extends Controller
                 'user_id' => $entry->{'user_id'},
                 'user_first_name' => $entry->{'first_name'},
                 'user_last_name' => $entry->{'last_name'},
-                'tags' => $tags_by_course->{$course_id},
-                'languages' => $languages_by_course->{$course_id}
+                'tags' => $tags_by_course->{$course_id} ?? [],
+                'languages' => $languages_by_course->{$course_id} ?? []
             );
             if (!isset($courses_by_lan->{$lan_id})) {
-                $courses_by_lan->{$lan_id} = array();
+                $courses_by_lan->{$lan_id} = (object)[];
             }
-            $courses_by_lan->{$lan_id}[] = $course;
+            $courses_by_lan->{$lan_id}->{$course_id} = $course;
+        }
+        $final_courses_by_lan = (object)[];
+        foreach ($courses_by_lan as $lan_id => $courses_f) {
+            $new_courses = [];
+            foreach ($courses_f as $cou_id => $course) {
+                $new_courses[] = $course;
+            }
+            $final_courses_by_lan->{$lan_id} = $new_courses;
         }
 
 
@@ -173,12 +181,11 @@ class LanguageController extends Controller
         $languages = DB::select(DB::raw(
             "SELECT languages.id, lan_title, lan_description, lan_logo
             From languages
-            LEFT JOIN language_course AS LC ON LC.language_id = languages.id
             "
         ));
         foreach ($languages as $lan) {
             $lan_id = $lan->{'id'};
-            $lan->{'courses'} = $courses_by_lan;
+            $lan->{'courses'} = $final_courses_by_lan->{$lan_id}  ?? [];
         }
         return response()->json($languages);
     }

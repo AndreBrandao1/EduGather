@@ -21,10 +21,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        #DB::table('tags')
-        ## ->join('course_tag', 'tags.id', '=', 'course_tag.tag_id')
-        # ->join('courses', 'courses.id', '=', 'course_tag.course_id')
-        # ->select('')
+
         $tags = DB::select(DB::raw(
             "SELECT courses.id AS course_id, tags.id AS tag_id, tags.tag_title, users.id As user_id, users.first_name, users.last_name
         FROM tags
@@ -101,16 +98,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $course = new Course();
+        $course->cou_title = $request->cou_title;
+        $course->cou_description = $request->cou_description;
+        $course->cou_logo = "random";
+        $course->user_id = 1;
+        $course->cat_id = $request->cat_id;
+        $course->cou_statue = 'on_hold';
 
-        $course = Course::create([
-            "cou_title" => $request->cou_title,
-            "cou_description" => $request->cou_description,
-            "cou_logo" => $request->cou_logo,
-            "user_id" => $user_id,
-            "cat_id" => $request->cat_id,
-            "cou_statue" => 'on_hold',
-        ]);
+        $course->save();
     }
 
     /**
@@ -233,20 +229,21 @@ class CourseController extends Controller
 
     public function serve_courses()
     {
-        $data = DB::select(DB::raw("
+        $data = DB::select(DB::raw(
+            "
         SELECT 
-TCRS.*,
-LCRS.*,
-CRS.cou_title as \"cou_title\",
-CRS.cou_description as \"cou_description\",
-CRS.cou_logo as \"cou_logo\",
-CRS.user_id as \"user_id\",
-USR.first_name as \"first_name\",
-USR.last_name as \"last_name\",
-CATA.id as \"cat_id\",
-CATA.cat_title as \"cat_title\",
-CATA.cat_description as \"cat_description\",
-CATA.cat_logo as \"cat_logo\"
+    TCRS.*,
+    LCRS.*,
+    CRS.cou_title as \"cou_title\",
+    CRS.cou_description as \"cou_description\",
+    CRS.cou_logo as \"cou_logo\",
+    CRS.user_id as \"user_id\",
+    USR.first_name as \"first_name\",
+    USR.last_name as \"last_name\",
+    CATA.id as \"cat_id\",
+    CATA.cat_title as \"cat_title\",
+    CATA.cat_description as \"cat_description\",
+    CATA.cat_logo as \"cat_logo\"
 
 
 	FROM (SELECT
@@ -268,7 +265,87 @@ CATA.cat_logo as \"cat_logo\"
         LEFT JOIN courses AS CRS ON CRS.id = TCRS.course_id
         LEFT JOIN users AS USR ON USR.id = CRS.user_id
         LEFT JOIN categories AS CATA ON CATA.id = CRS.cat_id
-        "));;
+        "
+        ));;
+        $tags_by_course = (object)[];
+        foreach ($data as $entry) {
+            $course_id = $entry->{'course_id'};
+            $tag = array(
+                "tag_id" => $entry->{'tag_id'},
+                "tag_title" => $entry->{'tag_title'},
+                "tag_logo" => $entry->{'tag_logo'}
+            );
+            if (!isset($tags_by_course->{$course_id})) {
+                $tags_by_course->{$course_id} = array();
+            }
+            $tags_by_course->{$course_id}[] = $tag;
+        }
+        $languages_by_course = (object)[];
+        foreach ($data as $entry) {
+            $course_id = $entry->{'course_id'};
+            $language = array(
+                "lan_id" => $entry->{'lan_id'},
+                "lan_title" => $entry->{'lan_title'},
+                "lan_logo" => $entry->{'lan_logo'},
+            );
+            if (!isset($languages_by_course->{$course_id})) {
+                $languages_by_course->{$course_id} = array();
+            }
+            $languages_by_course->{$course_id}[] = $language;
+
+            $new_data = (object)[];
+            foreach ($data as $course) {
+                $course_id = $course->{'course_id'};
+                $course->{'languages'} = array();
+                if (isset($languages_by_course->{$course_id})) {
+                    $course->{'languages'} = $languages_by_course->{$course_id};
+                }
+                $course->{'tags'} = array();
+                if (isset($tags_by_course->{$course_id})) {
+                    $course->{'tags'} = $tags_by_course->{$course_id};
+                }
+            }
+            $courses_by_course_id = (object)[];
+            foreach ($data as $course) {
+                $cou_id = $course->{'course_id'};
+                $courses = array(
+                    "cou_id" => $course->{'course_id'},
+                    "cou_title" => $course->{'cou_title'},
+                    "cou_description" => $course->{'cou_description'},
+                    "cou_logo" => $course->{'cou_logo'},
+                    "cat_id" => $course->{'cat_id'},
+                    "cat_title" => $course->{'cat_title'},
+                    "cat_logo" => $course->{'cat_logo'},
+                    "cat_description" => $course->{'cat_description'},
+                    "user_id" => $course->{'user_id'},
+                    "first_name" => $course->{'first_name'},
+                    "last_name" => $course->{'last_name'},
+                    "languages" => $course->{'languages'},
+                    "tags" => $course->{'tags'},
+                );
+            }
+        }
+
+
         return response()->json($data);
+    }
+
+
+
+    /**
+     * getting the courses by DB
+     * no input
+     */
+
+    public function get_them()
+    {
+        $courses =  DB::table('tags')
+        ->join('course_tag', 'tags.id', '=', 'course_tag.tag_id')
+        ->join('courses', 'courses.id', '=', 'course_tag.course_id')
+        ->select('*')
+            ->groupBy('courses.id')
+            ->get();
+
+        return response()->json($courses);
     }
 }
