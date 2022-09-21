@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Database\Factories\CourseFactory;
@@ -38,4 +39,7 @@ Route::get('/course/{id}', [CourseController::class, 'show']);
 
 Route::get('/tags', [CourseController::class, 'index']);
 Route::get('/courses', [CourseController::class, 'get_all']);
+Route::get('/languages', [LanguageController::class, 'get_all']);
 Route::post('insert_course', [CourseController::class, 'store']);
+
+Route::get('/coursesIN', [CourseController::class, 'serve_courses']);
