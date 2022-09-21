@@ -102,12 +102,14 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $user_id = auth()->user()->id;
+
         $course = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
             "cou_logo" => $request->cou_logo,
             "user_id" => $user_id,
-            "cat_id" => $request->cat_id
+            "cat_id" => $request->cat_id,
+            "cou_statue" => 'on_hold',
         ]);
     }
 
@@ -185,7 +187,7 @@ class CourseController extends Controller
             $course_id = $entry->{'course_id'};
             $tag = array(
                 "tag_id" => $entry->{'tag_id'},
-                "tag-title" => $entry->{'tag_title'}
+                "tag_title" => $entry->{'tag_title'}
             );
             if (!isset($tags_by_course->{$course_id})) {
                 $tags_by_course->{$course_id} = array();
