@@ -19,7 +19,7 @@ class LanguageCourseSeeder extends Seeder
             ['course_id' => 1, 'language_id' => 1],
             ['course_id' => 1, 'language_id' => 2],
             ['course_id' => 1, 'language_id' => 3],
-            ['course_id' => 1, 'language_id' => 2],
+            ['course_id' => 1, 'language_id' => 4],
             ['course_id' => 2, 'language_id' => 1],
             ['course_id' => 2, 'language_id' => 3],
             ['course_id' => 2, 'language_id' => 4]

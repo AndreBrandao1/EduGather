@@ -27,7 +27,7 @@ class CatTagSeeder extends Seeder
             ['category_id' => 2, 'tag_id' => 9],
             ['category_id' => 3, 'tag_id' => 10],
             ['category_id' => 4, 'tag_id' => 3],
-            ['category_id' => 1, 'tag_id' => 2]
+            ['category_id' => 4, 'tag_id' => 2]
         ]);
     }
 }
