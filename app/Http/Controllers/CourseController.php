@@ -235,18 +235,18 @@ class CourseController extends Controller
     {
         $data = DB::select(DB::raw("
         SELECT 
-TCRS.*,
-LCRS.*,
-CRS.cou_title as \"cou_title\",
-CRS.cou_description as \"cou_description\",
-CRS.cou_logo as \"cou_logo\",
-CRS.user_id as \"user_id\",
-USR.first_name as \"first_name\",
-USR.last_name as \"last_name\",
-CATA.id as \"cat_id\",
-CATA.cat_title as \"cat_title\",
-CATA.cat_description as \"cat_description\",
-CATA.cat_logo as \"cat_logo\"
+    TCRS.*,
+    LCRS.*,
+    CRS.cou_title as \"cou_title\",
+    CRS.cou_description as \"cou_description\",
+    CRS.cou_logo as \"cou_logo\",
+    CRS.user_id as \"user_id\",
+    USR.first_name as \"first_name\",
+    USR.last_name as \"last_name\",
+    CATA.id as \"cat_id\",
+    CATA.cat_title as \"cat_title\",
+    CATA.cat_description as \"cat_description\",
+    CATA.cat_logo as \"cat_logo\"
 
 
 	FROM (SELECT
@@ -269,6 +269,50 @@ CATA.cat_logo as \"cat_logo\"
         LEFT JOIN users AS USR ON USR.id = CRS.user_id
         LEFT JOIN categories AS CATA ON CATA.id = CRS.cat_id
         "));;
+        $new_object = (object)[];
+        $tags_by_course = (object)[];
+        foreach ($data as $entry) {
+            $course_id = $entry->{'course_id'};
+            $tag = array(
+                "tag_id" => $entry->{'tag_id'},
+                "tag_title" => $entry->{'tag_title'},
+                "tag_logo" => $entry->{'tag_logo'}
+            );
+            if (!isset($tags_by_course->{$course_id})) {
+                $tags_by_course->{$course_id} = array();
+            }
+            $tags_by_course->{$course_id}[] = $tag;
+        }
+        $languages_by_course = (object)[];
+        foreach ($data as $entry) {
+            $course_id = $entry->{'course_id'};
+            $language = array(
+                "lan_id" => $entry->{'lan_id'},
+                "lan_title" => $entry->{'lan_title'},
+                "lan_logo" => $entry->{'lan_logo'},
+            );
+            if (!isset($languages_by_course->{$course_id})) {
+                $languages_by_course->{$course_id} = array();
+            }
+            $languages_by_course->{$course_id}[] = $language;
+            $new_data = (object)[];
+            foreach ($data as $course) {
+
+                $course_id = $course->{'course_id'};
+                $course->{'languages'} = array();
+                if (isset($languages_by_course->{$course_id})) {
+                    $course->{'languages'} = $languages_by_course->{$course_id};
+                }
+                $course->{'tags'} = array();
+                if (isset($tags_by_course->{$course_id})) {
+                    $course->{'tags'} = $tags_by_course->{$course_id};
+                }
+            }
+            foreach ($data as $course) {
+            }
+        }
+
+
         return response()->json($data);
     }
 }
