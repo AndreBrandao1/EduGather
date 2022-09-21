@@ -21,10 +21,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        #DB::table('tags')
-        ## ->join('course_tag', 'tags.id', '=', 'course_tag.tag_id')
-        # ->join('courses', 'courses.id', '=', 'course_tag.course_id')
-        # ->select('')
+
         $tags = DB::select(DB::raw(
             "SELECT courses.id AS course_id, tags.id AS tag_id, tags.tag_title, users.id As user_id, users.first_name, users.last_name
         FROM tags
@@ -101,16 +98,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $course = new Course();
+        $course->cou_title = $request->cou_title;
+        $course->cou_description = $request->cou_description;
+        $course->cou_logo = "random";
+        $course->user_id = 1;
+        $course->cat_id = $request->cat_id;
+        $course->cou_statue = 'on_hold';
 
-        $course = Course::create([
-            "cou_title" => $request->cou_title,
-            "cou_description" => $request->cou_description,
-            "cou_logo" => $request->cou_logo,
-            "user_id" => $user_id,
-            "cat_id" => $request->cat_id,
-            "cou_statue" => 'on_hold',
-        ]);
+        $course->save();
     }
 
     /**
@@ -233,7 +229,8 @@ class CourseController extends Controller
 
     public function serve_courses()
     {
-        $data = DB::select(DB::raw("
+        $data = DB::select(DB::raw(
+            "
         SELECT 
     TCRS.*,
     LCRS.*,
@@ -268,8 +265,8 @@ class CourseController extends Controller
         LEFT JOIN courses AS CRS ON CRS.id = TCRS.course_id
         LEFT JOIN users AS USR ON USR.id = CRS.user_id
         LEFT JOIN categories AS CATA ON CATA.id = CRS.cat_id
-        "));;
-        $new_object = (object)[];
+        "
+        ));;
         $tags_by_course = (object)[];
         foreach ($data as $entry) {
             $course_id = $entry->{'course_id'};
@@ -295,9 +292,9 @@ class CourseController extends Controller
                 $languages_by_course->{$course_id} = array();
             }
             $languages_by_course->{$course_id}[] = $language;
+
             $new_data = (object)[];
             foreach ($data as $course) {
-
                 $course_id = $course->{'course_id'};
                 $course->{'languages'} = array();
                 if (isset($languages_by_course->{$course_id})) {
@@ -308,11 +305,47 @@ class CourseController extends Controller
                     $course->{'tags'} = $tags_by_course->{$course_id};
                 }
             }
+            $courses_by_course_id = (object)[];
             foreach ($data as $course) {
+                $cou_id = $course->{'course_id'};
+                $courses = array(
+                    "cou_id" => $course->{'course_id'},
+                    "cou_title" => $course->{'cou_title'},
+                    "cou_description" => $course->{'cou_description'},
+                    "cou_logo" => $course->{'cou_logo'},
+                    "cat_id" => $course->{'cat_id'},
+                    "cat_title" => $course->{'cat_title'},
+                    "cat_logo" => $course->{'cat_logo'},
+                    "cat_description" => $course->{'cat_description'},
+                    "user_id" => $course->{'user_id'},
+                    "first_name" => $course->{'first_name'},
+                    "last_name" => $course->{'last_name'},
+                    "languages" => $course->{'languages'},
+                    "tags" => $course->{'tags'},
+                );
             }
         }
 
 
         return response()->json($data);
+    }
+
+
+
+    /**
+     * getting the courses by DB
+     * no input
+     */
+
+    public function get_them()
+    {
+        $courses =  DB::table('tags')
+        ->join('course_tag', 'tags.id', '=', 'course_tag.tag_id')
+        ->join('courses', 'courses.id', '=', 'course_tag.course_id')
+        ->select('*')
+            ->groupBy('courses.id')
+            ->get();
+
+        return response()->json($courses);
     }
 }

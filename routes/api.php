@@ -43,3 +43,4 @@ Route::get('/languages', [LanguageController::class, 'get_all']);
 Route::post('insert_course', [CourseController::class, 'store']);
 
 Route::get('/coursesIN', [CourseController::class, 'serve_courses']);
+Route::get('/coursesThem', [CourseController::class, 'get_them']);
