@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Language extends Model
+class UserFavorite extends Model
 {
+    protected $table = 'users_favorites';
     use HasFactory;
-
-    public function language_course()
-    {
-        return $this->belongsToMany(Course::class);
-    }
 }

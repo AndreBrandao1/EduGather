@@ -17,4 +17,19 @@ class Course extends Model
         "cat_id",
         "cou_statue"
     ];
+
+    public function course_user()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function course_tag()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function course_language()
+    {
+        return $this->belongsToMany(Language::class);
+    }
 }
