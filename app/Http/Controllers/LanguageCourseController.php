@@ -38,6 +38,10 @@ class LanguageCourseController extends Controller
     public function store(Request $request)
     {
         //
+        $languagecourse = LanguageCourse::create([
+            "language_id" => $request->language_id,
+            "course_id" => $request->course_id,
+        ]);
     }
 
     /**
@@ -49,6 +53,8 @@ class LanguageCourseController extends Controller
     public function show($id)
     {
         //
+        $langcourse = LanguageCourse::find($id);
+        return response()->json($langcourse);
     }
 
     /**

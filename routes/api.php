@@ -29,26 +29,34 @@ use App\Models\Course as ModelsCourse;
 */
 
 
+#To list all the categorytag ids
 Route::get('/categorytag', [CategoryTagController::class, 'index']);
 
-# Route to get a specific category tag with its related data:
+# Route to get a specific category-tag id
 Route::get('/categorytag/{id}', [CategoryTagController::class, 'show']);
 
-# Route to insert a new category and tag:
+# Route to insert a new category-tag id
 Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
 
-
+#To list all the course-tag ids
 Route::get('/coursetag', [CourseTagController::class, 'index']);
 
-# Route to get a specific course tag with its related data:
+# Route to get a specific course-tag ids
 Route::get('/coursetag{id}', [CourseTagController::class, 'show']);
 
-# Route to insert a new course and tag:
-Route::post('/insertcoursetag', [CourseTagController::class, 'store']);
+# Route to insert a new course-tag ids
+Route::post('/insertcoursetag/{course_id}/{tag_id}', [CourseTagController::class, 'store']);
 
 
-
+#Route to get all language-course ids
 Route::get('/languagecourse', [LanguageCourseController::class, 'index']);
+
+# Route to get a specific language-course id
+Route::get('/languagecourse{id}', [LanguageCourseController::class, 'show']);
+
+# Route to insert a new language-course id
+Route::post('/insertlangcourse/{language_id}/{course_id}', [LanguageCourseController::class, 'store']);
+
 Route::get('/userfavorite', [UserFavoriteController::class, 'index']);
 
 

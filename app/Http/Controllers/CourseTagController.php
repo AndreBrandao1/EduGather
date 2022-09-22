@@ -1,4 +1,3 @@
-     * @param  \Illuminate\Http\Request  $request
 <?php
 
 namespace App\Http\Controllers;
@@ -47,8 +46,8 @@ class CourseTagController extends Controller
     {
         //
         $coursetag = CourseTag::create([
-            "course_id" => $course_id,
-            "tag_id" => $tag_id,
+            "course_id" => $request->course_id,
+            "tag_id" => $request->tag_id,
 
         ]);
     }
@@ -62,6 +61,8 @@ class CourseTagController extends Controller
     public function show($id)
     {
         //
+        $coursetag = CourseTag::find($id);
+        return response()->json($coursetag);
     }
 
     /**
