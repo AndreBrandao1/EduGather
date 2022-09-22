@@ -5,6 +5,11 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryTagController;
+use App\Http\Controllers\CourseTagController;
+use App\Http\Controllers\LanguageCourseController;
+use App\Http\Controllers\UserFavoriteController;
+
 use Database\Factories\CourseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +29,11 @@ use App\Models\Course as ModelsCourse;
 */
 
 
+Route::get('/categorytag', [CategoryTagController::class, 'index']);
+Route::get('/coursetag', [CourseTagController::class, 'index']);
+Route::get('/languagecourse', [LanguageCourseController::class, 'index']);
+Route::get('/userfavorite', [UserFavoriteController::class, 'index']);
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -33,6 +43,8 @@ Route::get('/getUser', function () {
     $userId = Auth::id();
     return $userId;
 });
+
+
 
 # do not use this one:: you can use the one mentioned below :: /categories which will retrive all the data of the categories and the related tags
 Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);

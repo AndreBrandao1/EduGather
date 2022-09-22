@@ -17,7 +17,11 @@ class Category extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     * 
+     *  
      */
+
+
     protected $fillable = [
         'cat_title',
         'cat_description',
@@ -35,10 +39,8 @@ class Category extends Model
     /**
      * Get the courses for the category.
      */
-    public function category_cours()
+    public function category_course()
     {
         return $this->belongsToMany(Course::class);
     }
-
-
 }
