@@ -106,9 +106,9 @@ class CategoryController extends Controller
                 "tag_logo" => $entery->{"tag_logo"}
             );
             if (!isset($tags_by_category->{$cat_id})) {
-                $tags_by_category->{$cat_id}[] = array();
+                $tags_by_category->{$cat_id} = array();
             }
-            $tags_by_category->{$cat_id}[] = $tags;
+            $tags_by_category->{$cat_id} = $tags;
         }
         $categoryisf = DB::select(DB::raw(
             "

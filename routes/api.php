@@ -44,7 +44,7 @@ Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
 #test this api it will take a request that need a @param: cou_title, cou_description
 Route::post('/update_course/{$id}', [CourseController::class, 'update']);
 #delete a course
-Route::get('/delete_course/{$id}', [CourseController::class, 'destroy']);
+Route::get('/delete_course/{id}', [CourseController::class, 'destroy']);
 
 
 

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_id');
             $table->enum('cou_statue', ['on_hold', 'verified', 'denied']);
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('cat_id')->references('id')->on('categories');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
