@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CategoryTag;
+use App\Http\Controllers\UserController;
+use App\Models\Category;
+use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\DB;
+
 
 class CategoryTagController extends Controller
 {
@@ -38,6 +43,11 @@ class CategoryTagController extends Controller
     public function store(Request $request)
     {
         //
+        $cattag = CategoryTag::create([
+            "category_id" => $request->category_id,
+            "tag_id" => $request->tag_id,
+
+        ]);
     }
 
     /**
@@ -49,6 +59,8 @@ class CategoryTagController extends Controller
     public function show($id)
     {
         //
+        $cattag = CategoryTag::find($id);
+        return response()->json($cattag);
     }
 
     /**

@@ -30,7 +30,24 @@ use App\Models\Course as ModelsCourse;
 
 
 Route::get('/categorytag', [CategoryTagController::class, 'index']);
+
+# Route to get a specific category tag with its related data:
+Route::get('/categorytag/{id}', [CategoryTagController::class, 'show']);
+
+# Route to insert a new category and tag:
+Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
+
+
 Route::get('/coursetag', [CourseTagController::class, 'index']);
+
+# Route to get a specific course tag with its related data:
+Route::get('/coursetag{id}', [CourseTagController::class, 'show']);
+
+# Route to insert a new course and tag:
+Route::post('/insertcoursetag', [CourseTagController::class, 'store']);
+
+
+
 Route::get('/languagecourse', [LanguageCourseController::class, 'index']);
 Route::get('/userfavorite', [UserFavoriteController::class, 'index']);
 
@@ -63,7 +80,9 @@ Route::post('/delete_course/{id}', [CourseController::class, 'destroy']);
 
 
 
+/*Route::get('/langcourse{id}', [LanguageCourseController::class, 'get_lang_course']);
 
+Route::get('/userfavorite{id}', [UserFavoriteController::class, 'get_']); */
 
 
 
@@ -77,8 +96,6 @@ Route::get('/courses', [CourseController::class, 'get_all']);
 Route::get('/course/{id}', [CourseController::class, 'show']);
 # Route to insert a new course:
 Route::post('insert_course', [CourseController::class, 'store']);
-#Route to edite a course:
-
 
 ## Routes for the categories
 #Route for the categories and their related Tags:
@@ -93,7 +110,6 @@ Route::get('/tags', [TagController::class, 'get_tags']);
 Route::get('/tags_courses', [TagController::class, 'get_tags_courses']);
 ## get courses by a single tag, ((all)) the data of the courses are included
 Route::get('/courses_tag{tag_id}', [TagController::class, 'get_courses']);
-
 
 
 

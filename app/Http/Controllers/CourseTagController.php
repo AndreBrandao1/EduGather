@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CourseTag;
+use App\Models\Course;
+use App\Models\Tag;
+use App\Http\Controllers\UserController;
+use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Facades\DB;
+
+
 
 class CourseTagController extends Controller
 {
@@ -38,6 +45,11 @@ class CourseTagController extends Controller
     public function store(Request $request)
     {
         //
+        $coursetag = CourseTag::create([
+            "course_id" => $course_id,
+            "tag_id" => $tag_id,
+
+        ]);
     }
 
     /**

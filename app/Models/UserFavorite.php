@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserFavorite extends Model
 {
+
+    protected $fillable = [
+        'course_id',
+        'user_id',
+    ];
+
     protected $table = 'users_favorites';
     use HasFactory;
 }
