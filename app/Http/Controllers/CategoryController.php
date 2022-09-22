@@ -86,7 +86,7 @@ class CategoryController extends Controller
         //
     }
     /**
-     * @return all the categories
+     * @return all the categories with thier related tags
      */
     public function get_categories()
     {

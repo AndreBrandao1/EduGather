@@ -15,18 +15,28 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tags')->insert([
-            ['tag_title' => 'tag1', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag2', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag3', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag4', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag5', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag6', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag7', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag8', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag9', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag10', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png'],
-            ['tag_title' => 'tag11', 'tag_description' => 'cool to learn', 'tag_logo' => 'https://cdn.pixabay.com/photo/2013/07/13/01/17/spider-155449_960_720.png']
+        DB::table('tags')->insert([['tag_title' => 'Web Development', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Data Scince', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Mobile Development', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Programing Languages', 'tag_description' => ' ', 'tag_logo' => ''],
+
+            ['tag_title' => 'Communication', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Management', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Sales', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Business Strategy', 'tag_description' => ' ', 'tag_logo' => ''],
+
+            ['tag_title' => 'Network & Security', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Hardware', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'OS', 'tag_description' => 'Operation Systems', 'tag_logo' => ''],
+
+            ['tag_title' => 'Digital Marketing', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'SEO', 'tag_description' => 'Search Engine Optimization', 'tag_logo' => ''],
+            ['tag_title' => 'Branding', 'tag_description' => '', 'tag_logo' => ''],
+
+            ['tag_title' => 'Web Design', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Graphic Design', 'tag_description' => ' ', 'tag_logo' => ''],
+            ['tag_title' => 'Game Design', 'tag_description' => ' ', 'tag_logo' => ''],
+
 
         ]);
     }
