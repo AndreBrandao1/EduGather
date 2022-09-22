@@ -37,8 +37,16 @@ Route::get('/getUser', function () {
 # do not use this one:: you can use the one mentioned below :: /categories which will retrive all the data of the categories and the related tags
 Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
 
-#Route::get('/tags', [CourseController::class, 'index']);
-Route::get('/coursesIN', [CourseController::class, 'serve_courses']);
+
+
+
+## testing APIs
+#test this api it will take a request that need a @param: cou_title, cou_description
+Route::post('/update_course/{$id}', [CourseController::class, 'update']);
+#delete a course
+Route::get('/delete_course/{$id}', [CourseController::class, 'destroy']);
+
+
 
 
 
@@ -71,6 +79,8 @@ Route::get('/categories', [CategoryController::class, 'get_categories']);
 Route::get('/tags', [TagController::class, 'get_tags']);
 # tags with their courses
 Route::get('/tags_courses', [TagController::class, 'get_tags_courses']);
+## get courses by a single tag, ((all)) the data of the courses are included
+Route::get('/courses_tag{tag_id}', [TagController::class, 'get_courses']);
 
 
 

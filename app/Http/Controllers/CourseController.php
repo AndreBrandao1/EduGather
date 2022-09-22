@@ -138,9 +138,9 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(Request $request, $cou_id)
     {
-        //
+        
     }
 
     /**
@@ -150,20 +150,32 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $cou_id)
     {
-        //
+        $request->validate([
+            'cou_title' => 'required|min:3|max:30',
+            'cou_description' => 'required|min:3',
+
+        ]);
+
+        $course = Course::find($cou_id);
+
+        $course->cou_title = $request->cou_title;
+        $course->cou_description = $request->cou_description;
+        
     }
 
-    /**
+    /** it does not work yet
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+        $course = Course::find($id);
+        $course->delete();
+
     }
 
     /**
@@ -230,6 +242,9 @@ class CourseController extends Controller
     }
 
 
+
+
+    ## not working
     public function serve_courses()
     {
         $data = DB::select(DB::raw("
