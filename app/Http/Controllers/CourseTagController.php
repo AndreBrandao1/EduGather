@@ -1,3 +1,4 @@
+     * @param  \Illuminate\Http\Request  $request
 <?php
 
 namespace App\Http\Controllers;
