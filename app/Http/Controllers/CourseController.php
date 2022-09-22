@@ -140,7 +140,6 @@ class CourseController extends Controller
      */
     public function edit(Request $request, $cou_id)
     {
-        
     }
 
     /**
@@ -162,7 +161,6 @@ class CourseController extends Controller
 
         $course->cou_title = $request->cou_title;
         $course->cou_description = $request->cou_description;
-        
     }
 
     /** it does not work yet
@@ -173,8 +171,10 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-      
-
+        DB::select(DB::raw("DELETE FROM course_tag WHERE course_tag.course_id = $id"));
+        DB::select(DB::raw("DELETE FROM language_course WHERE language_course.course_id = $id"));
+        DB::select(DB::raw("DELETE FROM courses WHERE courses.id = $id"));
+        
     }
 
     /**
@@ -284,6 +284,4 @@ CATA.cat_logo as \"cat_logo\"
         "));;
         return response()->json($data);
     }
-
-
 }
