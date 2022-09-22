@@ -97,8 +97,12 @@ class UserController extends Controller
      */
     public function get_courses($trainer_id)
     {
+        $courses = (object)[];
+        $tags_by_course = (object)[];
+        $languages_by_course = (object)[];
 
-        if (0 == 0) {
+        $check_user = User::find($trainer_id);
+        if ($check_user) {
             $tags = DB::select(DB::raw("SELECT courses.id AS course_id, tags.id AS tag_id, tags.tag_title,tags.tag_description, tags.tag_logo, users.id As user_id, users.first_name, users.last_name
         FROM tags
         LEFT JOIN course_tag ON tags.id=course_tag.tag_id
