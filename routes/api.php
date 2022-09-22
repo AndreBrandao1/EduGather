@@ -69,6 +69,10 @@ Route::get('/categories', [CategoryController::class, 'get_categories']);
 ## Routes for the Tags
 # Route that get the all data from Tags table (((only)))
 Route::get('/tags', [TagController::class, 'get_tags']);
+# tags with their courses
+Route::get('/tags_courses', [TagController::class, 'get_tags_courses']);
+
+
 
 
 
