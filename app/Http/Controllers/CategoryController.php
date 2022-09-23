@@ -96,19 +96,18 @@ class CategoryController extends Controller
             LEFT JOIN category_tag AS CT ON T.id = CT.tag_id
             LEFT JOIN categories AS C ON C.id = CT.category_id"
         ));
+        
         $tags_by_category = (object)[];
         foreach ($categories as $entery) {
             $cat_id = $entery->{'cat_id'};
             $tags = array(
                 "tag_id" => $entery->{"tag_id"},
                 "tag_title" => $entery->{"tag_title"},
-                "tag_description" => $entery->{"tag_description"},
-                "tag_logo" => $entery->{"tag_logo"}
             );
             if (!isset($tags_by_category->{$cat_id})) {
                 $tags_by_category->{$cat_id} = array();
             }
-            $tags_by_category->{$cat_id} = $tags;
+            $tags_by_category->{$cat_id}[] = $tags;
         }
         $categoryisf = DB::select(DB::raw(
             " SELECT C.id AS cat_id, C.cat_title, C.cat_description, C.cat_logo
