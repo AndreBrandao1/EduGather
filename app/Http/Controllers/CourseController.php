@@ -105,19 +105,22 @@ class CourseController extends Controller
         $course_id = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
-            "cou_logo" => $request->cou_logo,
             "user_id" => $user_id,
             "cat_id" => $request->cat_id
         ])->id;
         $tags = [];
-        $tags = $request->tags;
+        if ($request->languages) {
+            $tags = $request->tags;
+        }
         if ($tags) {
             foreach ($tags as $tag) {
                 DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag');"));
             }
         }
         $languages = [];
-        $languages = $request->languages;
+        if ($request->languages) {
+            $languages = $request->languages;
+        }
         if ($languages) {
             foreach ($languages as $lan) {
                 DB::select(DB::raw("INSERT INTO language_course (language_id, course_id) VALUES ('$course_id', '$lan');"));
