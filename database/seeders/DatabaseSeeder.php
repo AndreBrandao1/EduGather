@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             CourseTagSeeder::class,
             LanguageSeeder::class,
             LanguageCourseSeeder::class,
+            ContactSeeder::class,
         ]);
     }
 }
