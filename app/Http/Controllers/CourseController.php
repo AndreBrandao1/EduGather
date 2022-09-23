@@ -109,7 +109,9 @@ class CourseController extends Controller
             "cat_id" => $request->cat_id
         ])->id;
         $tags = [];
-        $tags = $request->tags;
+        if ($request->languages) {
+            $tags = $request->tags;
+        }
         if ($tags) {
             foreach ($tags as $tag) {
                 DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag');"));
