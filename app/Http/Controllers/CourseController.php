@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use Dflydev\DotAccessData\Data;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
@@ -265,7 +266,7 @@ class CourseController extends Controller
     /**
      * Display a listing of the courses which are ((ONHOLD or other value)) FOR ADMIN.
      *
-     * @param $trainer_id
+     * @param $status
      * @return \Illuminate\Http\Response
      */
     public function get_onhold_courses($status)
@@ -345,7 +346,7 @@ class CourseController extends Controller
     /**
      * Display a listing of the courses which are ((ONHOLD or other value)) FOR ADMIN or USERPAGE.
      *
-     * @param $trainer_id
+     * @param $status, $user_id
      * @return \Illuminate\Http\Response
      */
     public function get_onhold_courses_for_user($status, $user_id)
@@ -422,6 +423,17 @@ class CourseController extends Controller
             return response()->json($courses);
         } else  $courses = [];
         return response()->json($courses);
+    }
+
+    /**
+     * @param course_id, $new_status
+     */
+    public function aprove_course($course_id, $new_status)
+    {
+        if (($new_status == 'aproved') || ($new_status == 'denied') || ($new_status == 'on_hold')) {
+            DB::select(DB::raw("UPDATE courses SET cou_statue = '$new_status' WHERE courses.id = '$course_id';"));
+        }
+        return response("course: $course_id status is updated to $new_status");
     }
 
 

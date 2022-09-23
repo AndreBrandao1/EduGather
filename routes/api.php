@@ -136,3 +136,6 @@ Route::get('/user_courses/{status}', [CourseController::class, 'get_onhold_cours
 
 #the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied) for ((((a specific user))))
 Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_onhold_courses_for_user']);
+
+#admine aprove or deny or change the value of any course
+Route::get('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
