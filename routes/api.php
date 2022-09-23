@@ -55,9 +55,11 @@ Route::get('/categories/{id}', [CategoryController::class, 'get_category_tags'])
 
 
 ## testing APIs
-Route::post('testapi', [UserFavoriteController::class, 'creat_link']);
+Route::get('testapi/{status}', [CourseController::class, 'get_onhold_courses']);
 
 Route::get('testapi/{user_id}/{course_id}', [UserFavoriteController::class, 'creat_link']);
+
+
 
 
 
@@ -73,11 +75,12 @@ Route::get('/userfavorite{id}', [UserFavoriteController::class, 'get_']); */
 /**
  * @Working Routes
  */
+
 ## Routes for the courses:
 # Route to get all the courses with their related data:
 Route::get('/courses', [CourseController::class, 'get_all']);
 # Route to get a specific course with its related data:
-Route::get('/course/{id}', [CourseController::class, 'show']);
+Route::get('/courses/{id}', [CourseController::class, 'show']);
 # Route to insert a new course:
 Route::post('insert_course', [CourseController::class, 'store']);
 #test this api it will take a request that need a @param: cou_title, cou_description
@@ -128,3 +131,5 @@ Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'admin_ge
 #Route to insert/delete a new user-favorite id takes two inputes ((course_id & user_id))
 Route::post('/inser_favorit', [UserFavoriteController::class, 'creat_link']);
 
+#the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied)
+Route::get('user_courses/{status}', [CourseController::class, 'get_onhold_courses']);

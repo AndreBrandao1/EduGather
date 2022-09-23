@@ -114,10 +114,11 @@ class CourseController extends Controller
             $tags = $request->tags;
         }
         $course_id = DB::select(DB::raw("SELECT id FROM courses ORDER BY id DESC LIMIT 1"));
+        $course_id_value = $course_id[0]->id;
         if ($tags) {
             $tags1 = explode(",", $tags);
             foreach ($tags1 as $tag) {
-                DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag')"));
+                DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id_value', '$tag')"));
             }
         }
         $languages = [];
@@ -261,15 +262,93 @@ class CourseController extends Controller
     }
 
 
+    /**
+     * Display a listing of the courses which are ((ONHOLD)) FOR ADMIN.
+     *
+     * @param $trainer_id
+     * @return \Illuminate\Http\Response
+     */
+    public function get_onhold_courses($status)
+    {
+        $courses = (object)[];
+        $tags_by_course = (object)[];
+        $languages_by_course = (object)[];
+
+        $check_onhold = DB::select(DB::raw("SELECT * FROM courses WHERE courses.cou_statue = '$status'"));
+        if ($check_onhold) {
+            $tags = DB::select(DB::raw("SELECT courses.id AS course_id, courses.cou_statue, tags.id AS tag_id, tags.tag_title,tags.tag_description, tags.tag_logo, users.id As user_id, users.first_name, users.last_name
+        FROM tags
+        LEFT JOIN course_tag ON tags.id=course_tag.tag_id
+        LEFT JOIN courses ON courses.id=course_tag.course_id
+        LEFT JOIN users On courses.user_id = users.id
+        WHERE courses.cou_statue = '$status'"));
+            $tags_by_course = (object)[];
+            foreach ($tags as $entry) {
+                $course_id = $entry->{'course_id'};
+                $tag = array(
+                    "tag_id" => $entry->{'tag_id'},
+                    "tag_title" => $entry->{'tag_title'},
+                    "tag_description" => $entry->{'tag_description'},
+                    "tag_logo" => $entry->{'tag_logo'}
+                );
+                if (!isset($tags_by_course->{$course_id})) {
+                    $tags_by_course->{$course_id} = array();
+                }
+                $tags_by_course->{$course_id}[] = $tag;
+
+
+                $languages = DB::select(DB::raw("SELECT courses.id AS course_id, courses.cou_statue, languages.id AS language_id, languages.lan_title, lan_logo, users.id
+            FROM languages
+            LEFT JOIN language_course ON languages.id=language_course.language_id
+            LEFT JOIN courses ON courses.id=language_course.course_id
+			LEFT JOIN users On courses.user_id = users.id
+			WHERE courses.cou_statue = '$status'"));
+                $languages_by_course = (object)[];
+                foreach ($languages as $entry) {
+                    $course_id = $entry->{'course_id'};
+                    $language = array(
+                        "lan_id" => $entry->{'language_id'},
+                        "lan_title" => $entry->{'lan_title'},
+                        "lan_logo" => $entry->{'lan_logo'},
+                    );
+                    if (!isset($languages_by_course->{$course_id})) {
+                        $languages_by_course->{$course_id} = array();
+                    }
+                    $languages_by_course->{$course_id}[] = $language;
+                };
+                $course = (object)[];
+                $courses = DB::select(DB::raw("SELECT courses.id, cou_logo, cou_statue, cou_description, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
+            FROM courses 
+            LEFT JOIN users ON courses.user_id = users.id
+            LEFT JOIN categories ON courses.cat_id = categories.id
+            WHERE courses.cou_statue = '$status'"));
+                foreach ($courses as $course) {
+                    $course_id = $course->{'id'};
+                    $course->{'languages'} = array();
+                    if (isset($languages_by_course->{$course_id})) {
+                        $course->{'languages'} = $languages_by_course->{$course_id};
+                    }
+                    $course->{'tags'} = array();
+                    if (isset($tags_by_course->{$course_id})) {
+                        $course->{'tags'} = $tags_by_course->{$course_id};
+                    }
+                }
+            };
+
+
+            return response()->json($courses);
+        } else  $courses = [];
+        return response()->json($courses);
+    }
+
+
+
 
 
     ## not working
     public function serve_courses()
     {
-        $data = DB::select(DB::raw("
-        SELECT 
-TCRS.*,
-LCRS.*,
+        $data = DB::select(DB::raw("        SELECT TCRS.*,LCRS.*,
 CRS.cou_title as \"cou_title\",
 CRS.cou_description as \"cou_description\",
 CRS.cou_logo as \"cou_logo\",
@@ -304,4 +383,14 @@ CATA.cat_logo as \"cat_logo\"
         "));;
         return response()->json($data);
     }
+
+
+    public function test()
+    {
+        $course_id = DB::select(DB::raw("SELECT id FROM courses ORDER BY id DESC LIMIT 1"));
+        return response();
+    }
+
+
+    
 }
