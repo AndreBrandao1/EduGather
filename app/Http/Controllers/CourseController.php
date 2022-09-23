@@ -430,10 +430,12 @@ class CourseController extends Controller
      */
     public function aprove_course($course_id, $new_status)
     {
+        $msg = "allowed status are aproved, denied, on_hold";
         if (($new_status == 'aproved') || ($new_status == 'denied') || ($new_status == 'on_hold')) {
             DB::select(DB::raw("UPDATE courses SET cou_statue = '$new_status' WHERE courses.id = '$course_id';"));
+            $msg = "course: $course_id status is updated to $new_status";
         }
-        return response("course: $course_id status is updated to $new_status");
+        return response($msg);
     }
 
 
