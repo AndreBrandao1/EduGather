@@ -102,15 +102,27 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $user_id = auth()->user()->id;
-        $course = Course::create([
+        $course_id = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
             "cou_logo" => $request->cou_logo,
             "user_id" => $user_id,
             "cat_id" => $request->cat_id
-        ]);
-
-        
+        ])->id;
+        $tags = [];
+        $tags = $request->tags;
+        if ($tags) {
+            foreach ($tags as $tag) {
+                DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag');"));
+            }
+        }
+        $languages = [];
+        $languages = $request->languages;
+        if ($languages) {
+            foreach ($languages as $lan) {
+                DB::select(DB::raw("INSERT INTO language_course (language_id, course_id) VALUES ('$course_id', '$lan');"));
+            }
+        }
     }
 
     /**
@@ -177,7 +189,6 @@ class CourseController extends Controller
         DB::select(DB::raw("DELETE FROM language_course WHERE language_course.course_id = $id"));
         DB::select(DB::raw("DELETE FROM users_favorites WHERE users_favorites.course_id = $id"));
         DB::select(DB::raw("DELETE FROM courses WHERE courses.id = $id"));
-        
     }
 
     /**

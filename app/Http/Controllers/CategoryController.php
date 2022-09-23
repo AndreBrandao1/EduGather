@@ -111,10 +111,8 @@ class CategoryController extends Controller
             $tags_by_category->{$cat_id} = $tags;
         }
         $categoryisf = DB::select(DB::raw(
-            "
-            SELECT C.id AS cat_id, C.cat_title, C.cat_description, C.cat_logo
-	FROM  categories AS C
-            "
+            " SELECT C.id AS cat_id, C.cat_title, C.cat_description, C.cat_logo
+	FROM  categories AS C"
         ));
         foreach ($categoryisf as $cat) {
             $cat_id = $cat->{'cat_id'};
@@ -122,7 +120,6 @@ class CategoryController extends Controller
         }
 
         return response()->json($categoryisf);
-
     }
 
     /**
@@ -131,12 +128,9 @@ class CategoryController extends Controller
      */
     public function get_category_tags($id)
     {
-        $tags = DB::select(DB::raw("
-        SELECT T.id AS tag_id, T.tag_title AS tag_title, T.tag_logo AS tag_logo FROM category_tag AS CT
+        $tags = DB::select(DB::raw("SELECT T.id AS tag_id, T.tag_title AS tag_title, T.tag_logo AS tag_logo FROM category_tag AS CT
 	INNER JOIN tags AS T ON CT.category_id = T.id
     WHERE CT.category_id = $id"));
         return response()->json($tags);
     }
-
-    
 }
