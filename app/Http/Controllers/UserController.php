@@ -170,6 +170,16 @@ class UserController extends Controller
 
 
 
+    /**
+     * @return all trainers and their status for the admin
+     */
+    public function admin_get_users($role, $status)
+    {
+        $users = [];
+        $users =  DB::select(DB::raw("SELECT * FROM users AS U WHERE U.role = '$role' AND U.status = '$status'"));
+        return response()->json($users);
+    }
+
 
     public function get_one_user($id)
     {
