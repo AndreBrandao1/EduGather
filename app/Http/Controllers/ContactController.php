@@ -133,4 +133,21 @@ class ContactController extends Controller
             }
         }
     }
+
+    public function change_contact_status($sender, $reciever, $status)
+    {
+        //check if the status is correct
+        if (($status == 'aproved') || (($status == 'on_hold')) || ($status == 'denied')) {
+            //check the relationship
+            $s_r = DB::select(DB::raw("SELECT id FROM contacts WHERE demander_id = '$sender' AND receiver_id = '$reciever'"));
+            $r_s = DB::select(DB::raw("SELECT id FROM contacts WHERE demander_id = '$reciever' AND receiver_id = '$sender'"));
+        }
+        if ($s_r) {
+            DB::select(DB::raw("UPDATE contacts SET contact_status = '$status' WHERE demander_id = '$sender' AND receiver_id = '$reciever'"));
+        }
+        if ($r_s) {
+            DB::select(DB::raw("UPDATE contacts SET contact_status = '$status' WHERE demander_id = '$reciever' AND receiver_id = '$sender'"));
+        }
+    }
 }
+
