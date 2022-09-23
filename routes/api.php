@@ -91,6 +91,8 @@ Route::get('/categories', [CategoryController::class, 'get_categories']);
 Route::get('/categories_courses', [CategoryController::class, 'get_categories_courses']);
 # Route to insert a new category-tag id
 Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
+## get courses by a single category, ((all)) the data of the courses are included
+Route::get('/cat_courses/{cat_id}', [CategoryController::class, 'get_courses']);
 
 
 ## Routes for the Tags
@@ -99,7 +101,7 @@ Route::get('/tags', [TagController::class, 'get_tags']);
 # tags with their courses
 Route::get('/tags_courses', [TagController::class, 'get_tags_courses']);
 ## get courses by a single tag, ((all)) the data of the courses are included
-Route::get('/courses_tag{tag_id}', [TagController::class, 'get_courses']);
+Route::get('/courses_tag/{tag_id}', [TagController::class, 'get_courses']);
 
 
 
