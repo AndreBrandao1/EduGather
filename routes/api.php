@@ -57,7 +57,14 @@ Route::get('/languagecourse{id}', [LanguageCourseController::class, 'show']);
 # Route to insert a new language-course id
 Route::post('/insertlangcourse/{language_id}/{course_id}', [LanguageCourseController::class, 'store']);
 
+#Route to get all user-favorite ids
 Route::get('/userfavorite', [UserFavoriteController::class, 'index']);
+
+# Route to get a specific user-favorite id
+Route::get('/userfavorite{id}', [UserFavoriteController::class, 'show']);
+
+#Route to insert a new user-favorite id
+Route::post('/insertuserfavorite/{course_id}/{user_id}', [UserFavoriteController::class, 'store']);
 
 
 Route::get('/user', function (Request $request) {

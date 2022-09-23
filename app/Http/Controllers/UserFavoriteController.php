@@ -38,6 +38,10 @@ class UserFavoriteController extends Controller
     public function store(Request $request)
     {
         //
+        $userfavorite = UserFavorite::create([
+            'course_id' => $request->course_id,
+            'user_id' => $request->user_id
+        ]);
     }
 
     /**
@@ -49,6 +53,8 @@ class UserFavoriteController extends Controller
     public function show($id)
     {
         //
+        $userfavorite = UserFavorite::find($id);
+        return response()->json($userfavorite);
     }
 
     /**
