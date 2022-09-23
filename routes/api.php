@@ -6,6 +6,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryTagController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseTagController;
 use App\Http\Controllers\LanguageCourseController;
 use App\Http\Controllers\UserFavoriteController;
@@ -55,9 +56,12 @@ Route::get('/categories/{id}', [CategoryController::class, 'get_category_tags'])
 
 
 ## testing APIs
-Route::post('testapi', [UserFavoriteController::class, 'creat_link']);
+Route::get('testapi/{status}', [CourseController::class, 'get_onhold_courses']);
 
 Route::get('testapi/{user_id}/{course_id}', [UserFavoriteController::class, 'creat_link']);
+
+
+
 
 
 
@@ -73,11 +77,12 @@ Route::get('/userfavorite{id}', [UserFavoriteController::class, 'get_']); */
 /**
  * @Working Routes
  */
+
 ## Routes for the courses:
 # Route to get all the courses with their related data:
 Route::get('/courses', [CourseController::class, 'get_all']);
 # Route to get a specific course with its related data:
-Route::get('/course/{id}', [CourseController::class, 'show']);
+Route::get('/courses/{id}', [CourseController::class, 'show']);
 # Route to insert a new course:
 Route::post('insert_course', [CourseController::class, 'store']);
 #test this api it will take a request that need a @param: cou_title, cou_description
@@ -123,8 +128,31 @@ Route::get('/languages', [LanguageController::class, 'get_all']);
 Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
 
 #get the users for the ADMIN
-Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'admin_get_users']);
+Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'get_users_admin']);
 
 #Route to insert/delete a new user-favorite id takes two inputes ((course_id & user_id))
 Route::post('/inser_favorit', [UserFavoriteController::class, 'creat_link']);
 
+#the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied)
+Route::get('/user_courses/{status}', [CourseController::class, 'get_onhold_courses']);
+
+#the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied) for ((((a specific user))))
+Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_onhold_courses_for_user']);
+
+#admine aprove or deny or change the value of any course
+Route::post('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
+
+#admin change trainers's status for a spe trainer
+Route::post('aprove_trainer/{trainer_id}/{new_status}', [UserController::class, 'aprove_trainer']);
+
+
+##routes for realtionships
+
+#creating a relationship or a contact between users and or user trainer
+Route::post('start_relation/{sender}/{reciever}', [ContactController::class, 'start_relation']);
+
+#getting the status to a specific relationship inputes are the two users IDs
+Route::get('/get_contact_status/{sender}/{reciever}', [ContactController::class, 'get_contact_status']);
+
+#changing the status of a relationship  requires three inputs: sender, reciever and $new_status which can be: aproved, on_hold, denied
+Route::post('/update_contact_status/{sender}/{reciever}/{status}', [ContactController::class, 'change_contact_status']);

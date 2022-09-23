@@ -173,7 +173,7 @@ class UserController extends Controller
     /**
      * @return all trainers and their status for the admin
      */
-    public function admin_get_users($role, $status)
+    public function get_users_admin($role, $status)
     {
         $users = [];
         $users =  DB::select(DB::raw("SELECT * FROM users AS U WHERE U.role = '$role' AND U.status = '$status'"));
@@ -186,4 +186,6 @@ class UserController extends Controller
         $user = User::find($id);
         return $user;
     }
+
+  
 }
