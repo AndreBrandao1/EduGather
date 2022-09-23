@@ -357,7 +357,7 @@ class CourseController extends Controller
 
         $check_onhold = DB::select(DB::raw("SELECT * FROM courses WHERE courses.cou_statue = '$status'"));
         if ($check_onhold) {
-            $tags = DB::select(DB::raw("SELECT courses.id AS course_id, courses.cou_statue, tags.id AS tag_id, tags.tag_title,tags.tag_description, tags.tag_logo, users.id As user_id, users.first_name, users.last_name
+            $tags = DB::select(DB::raw("SELECT courses.id AS course_id, courses.cou_statue, courses.cou_title, tags.id AS tag_id, tags.tag_title,tags.tag_description, tags.tag_logo, users.id As user_id, users.first_name, users.last_name
         FROM tags
         LEFT JOIN course_tag ON tags.id=course_tag.tag_id
         LEFT JOIN courses ON courses.id=course_tag.course_id
@@ -379,7 +379,7 @@ class CourseController extends Controller
                 $tags_by_course->{$course_id}[] = $tag;
 
 
-                $languages = DB::select(DB::raw("SELECT courses.id AS course_id, courses.cou_statue, languages.id AS language_id, languages.lan_title, lan_logo, users.id
+                $languages = DB::select(DB::raw("SELECT courses.id AS course_id,courses.cou_title, courses.cou_statue, languages.id AS language_id, languages.lan_title, lan_logo, users.id
             FROM languages
             LEFT JOIN language_course ON languages.id=language_course.language_id
             LEFT JOIN courses ON courses.id=language_course.course_id
@@ -400,7 +400,7 @@ class CourseController extends Controller
                     $languages_by_course->{$course_id}[] = $language;
                 };
                 $course = (object)[];
-                $courses = DB::select(DB::raw("SELECT courses.id, cou_logo, cou_statue, cou_description, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
+                $courses = DB::select(DB::raw("SELECT courses.id,courses.cou_title, cou_logo, cou_statue, cou_description, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
             FROM courses 
             LEFT JOIN users ON courses.user_id = users.id
             LEFT JOIN categories ON courses.cat_id = categories.id

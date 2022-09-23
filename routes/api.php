@@ -6,6 +6,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryTagController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseTagController;
 use App\Http\Controllers\LanguageCourseController;
 use App\Http\Controllers\UserFavoriteController;
@@ -58,6 +59,7 @@ Route::get('/categories/{id}', [CategoryController::class, 'get_category_tags'])
 Route::get('testapi/{status}', [CourseController::class, 'get_onhold_courses']);
 
 Route::get('testapi/{user_id}/{course_id}', [UserFavoriteController::class, 'creat_link']);
+
 
 
 
@@ -142,3 +144,14 @@ Route::post('aprove_course/{course_id}/{new_status}', [CourseController::class, 
 
 #admin change trainers's status for a spe trainer
 Route::post('aprove_trainer/{trainer_id}/{new_status}', [UserController::class, 'aprove_trainer']);
+
+
+##routes for realtionships
+
+#creating a relationship or a contact between users and or user trainer
+Route::post('start_relation/{sender}/{reciever}', [ContactController::class, 'start_relation']);
+
+#getting the status to a specific relationship inputes are the two users IDs
+Route::get('/get_contact_status/{sender}/{reciever}', [ContactController::class, 'get_contact_status']);
+
+#changing the status of a relationship  requires three inputs: sender, reciever and $new_status
