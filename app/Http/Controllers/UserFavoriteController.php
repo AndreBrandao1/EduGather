@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserFavorite;
+use Illuminate\Support\Facades\DB;
 
 class UserFavoriteController extends Controller
 {
@@ -89,4 +90,21 @@ class UserFavoriteController extends Controller
     {
         //
     }
+    /**
+     * creat a link that takes two inputes, $user_id, $course_id
+     * 
+     */
+
+    public function creat_link($user_id, $course_id)
+    {
+
+        $favorite = DB::select(DB::raw("SELECT id FROM users_favorites WHERE course_id = $course_id AND user_id = $user_id"));
+        if ($favorite) {
+            $id = $favorite[0]->id;
+            DB::select(DB::raw("DELETE FROM users_favorites Where users_favorites.id = $id"));
+        } else {
+            DB::select(DB::raw("INSERT INTO users_favorites (course_id, user_id) VALUES('$user_id','$course_id' )"));
+        }
+    }
+
 }
