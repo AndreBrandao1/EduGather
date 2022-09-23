@@ -102,21 +102,22 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $user_id = $request->user_id;
-        $course_id = Course::create([
+        Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
             "cou_logo" => 'test',
             "user_id" => $user_id,
             "cat_id" => $request->cat_id
-        ])->id;
+        ]);
         $tags = [];
         if ($request->languages) {
             $tags = $request->tags;
         }
+        $course_id = DB::select(DB::raw("SELECT id FROM courses ORDER BY id DESC LIMIT 1"));
         if ($tags) {
             $tags1 = explode(",", $tags);
             foreach ($tags1 as $tag) {
-                DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag');"));
+                DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag')"));
             }
         }
         $languages = [];
