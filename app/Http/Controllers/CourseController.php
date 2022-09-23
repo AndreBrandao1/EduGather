@@ -101,7 +101,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = $request[0]->user_id;
+        $user_id = $request->user_id;
         $course_id = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
@@ -113,7 +113,8 @@ class CourseController extends Controller
             $tags = $request->tags;
         }
         if ($tags) {
-            foreach ($tags as $tag) {
+            $tags1 = explode(",", $tags);
+            foreach ($tags1 as $tag) {
                 DB::select(DB::raw("INSERT INTO course_tag ( course_id, tag_id) VALUES ('$course_id', '$tag');"));
             }
         }
