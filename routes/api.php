@@ -88,7 +88,7 @@ Route::post('/delete_course/{id}', [CourseController::class, 'destroy']);
 #Route for the categories and their related Tags:
 Route::get('/categories', [CategoryController::class, 'get_categories']);
 #Route for the categories and their related data including the courses and the courses' data
-
+Route::get('/categories_courses', [CategoryController::class, 'get_categories_courses']);
 # Route to insert a new category-tag id
 Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
 
