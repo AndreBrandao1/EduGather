@@ -28,43 +28,13 @@ use App\Models\Course as ModelsCourse;
 |
 */
 
-
-#To list all the categorytag ids
-Route::get('/categorytag', [CategoryTagController::class, 'index']);
-
-# Route to get a specific category-tag id
-Route::get('/categorytag/{id}', [CategoryTagController::class, 'show']);
-
-# Route to insert a new category-tag id
-Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
-
-#To list all the course-tag ids
-Route::get('/coursetag', [CourseTagController::class, 'index']);
-
-# Route to get a specific course-tag ids
-Route::get('/coursetag{id}', [CourseTagController::class, 'show']);
-
 # Route to insert a new course-tag ids
 Route::post('/insertcoursetag/{course_id}/{tag_id}', [CourseTagController::class, 'store']);
 
 
-#Route to get all language-course ids
-Route::get('/languagecourse', [LanguageCourseController::class, 'index']);
-
-# Route to get a specific language-course id
-Route::get('/languagecourse{id}', [LanguageCourseController::class, 'show']);
-
 # Route to insert a new language-course id
 Route::post('/insertlangcourse/{language_id}/{course_id}', [LanguageCourseController::class, 'store']);
 
-#Route to get all user-favorite ids
-Route::get('/userfavorite', [UserFavoriteController::class, 'index']);
-
-# Route to get a specific user-favorite id
-Route::get('/userfavorite{id}', [UserFavoriteController::class, 'show']);
-
-#Route to insert a new user-favorite id
-Route::post('/insertuserfavorite/{course_id}/{user_id}', [UserFavoriteController::class, 'store']);
 
 
 Route::get('/user', function (Request $request) {
@@ -79,16 +49,13 @@ Route::get('/getUser', function () {
 
 
 # do not use this one:: you can use the one mentioned below :: /categories which will retrive all the data of the categories and the related tags
-Route::get('/categories/{id}', [CategoryController::class, 'get_categoy_tags']);
+Route::get('/categories/{id}', [CategoryController::class, 'get_category_tags']);
 
 
 
 
 ## testing APIs
-#test this api it will take a request that need a @param: cou_title, cou_description
-Route::post('/update_course/{$id}', [CourseController::class, 'update']);
-#delete a course
-Route::post('/delete_course/{id}', [CourseController::class, 'destroy']);
+
 
 
 
@@ -111,11 +78,19 @@ Route::get('/courses', [CourseController::class, 'get_all']);
 Route::get('/course/{id}', [CourseController::class, 'show']);
 # Route to insert a new course:
 Route::post('insert_course', [CourseController::class, 'store']);
+#test this api it will take a request that need a @param: cou_title, cou_description
+Route::post('/update_course/{$id}', [CourseController::class, 'update']);
+#delete a course with all the related data from the intermediate tables
+Route::post('/delete_course/{id}', [CourseController::class, 'destroy']);
+
 
 ## Routes for the categories
 #Route for the categories and their related Tags:
 Route::get('/categories', [CategoryController::class, 'get_categories']);
 #Route for the categories and their related data including the courses and the courses' data
+
+# Route to insert a new category-tag id
+Route::get('/insertcattag/{category_id}/{tag_id}', [CategoryTagController::class, 'store']);
 
 
 ## Routes for the Tags
@@ -129,11 +104,22 @@ Route::get('/courses_tag{tag_id}', [TagController::class, 'get_courses']);
 
 
 
+
 ## Routes for the languages:
+# get the languages for the insert
+Route::get('get_languages', [LanguageController::class, 'index']);
+
 # get all the languages and the related courses and their related data.
 Route::get('/languages', [LanguageController::class, 'get_all']);
 
 
 ##Routes for the <users>
+
 # Route to get the courses of a trainer
 Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
+
+#get the users for the ADMIN
+Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'admin_get_users']);
+
+#Route to insert a new user-favorite id takes two inputes ((course_id & user_id))
+Route::post('/insertuserfavorite/{course_id}/{user_id}', [UserFavoriteController::class, 'store']);

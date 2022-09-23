@@ -16,8 +16,10 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $languages = Language::all();
+        return response()->json($languages);
     }
+    
 
     /**
      * Show the form for creating a new resource.
