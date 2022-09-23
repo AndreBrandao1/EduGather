@@ -138,4 +138,8 @@ Route::get('/user_courses/{status}', [CourseController::class, 'get_onhold_cours
 Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_onhold_courses_for_user']);
 
 #admine aprove or deny or change the value of any course
-Route::get('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
+Route::post('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
+
+#admin get all trainers with a specific status
+
+#admin change trainers's status for a spe trainer
