@@ -105,7 +105,6 @@ class CourseController extends Controller
         $course_id = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
-            "cou_logo" => $request->cou_logo,
             "user_id" => $user_id,
             "cat_id" => $request->cat_id
         ])->id;
