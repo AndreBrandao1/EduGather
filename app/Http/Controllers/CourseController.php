@@ -109,6 +109,8 @@ class CourseController extends Controller
             "user_id" => $user_id,
             "cat_id" => $request->cat_id
         ]);
+
+        
     }
 
     /**
@@ -173,6 +175,7 @@ class CourseController extends Controller
     {
         DB::select(DB::raw("DELETE FROM course_tag WHERE course_tag.course_id = $id"));
         DB::select(DB::raw("DELETE FROM language_course WHERE language_course.course_id = $id"));
+        DB::select(DB::raw("DELETE FROM users_favorites WHERE users_favorites.course_id = $id"));
         DB::select(DB::raw("DELETE FROM courses WHERE courses.id = $id"));
         
     }
