@@ -101,7 +101,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $user_id = $request[0]->user_id;
         $course_id = Course::create([
             "cou_title" => $request->cou_title,
             "cou_description" => $request->cou_description,
