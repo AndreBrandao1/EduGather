@@ -55,7 +55,9 @@ Route::get('/categories/{id}', [CategoryController::class, 'get_category_tags'])
 
 
 ## testing APIs
+Route::post('testapi', [UserFavoriteController::class, 'creat_link']);
 
+Route::get('testapi/{user_id}/{course_id}', [UserFavoriteController::class, 'creat_link']);
 
 
 
@@ -123,5 +125,6 @@ Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
 #get the users for the ADMIN
 Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'admin_get_users']);
 
-#Route to insert a new user-favorite id takes two inputes ((course_id & user_id))
-Route::post('/insertuserfavorite/{course_id}/{user_id}', [UserFavoriteController::class, 'store']);
+#Route to insert/delete a new user-favorite id takes two inputes ((course_id & user_id))
+Route::post('/inser_favorit', [UserFavoriteController::class, 'creat_link']);
+
