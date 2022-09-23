@@ -201,7 +201,7 @@ class TagController extends Controller
 
     /**
      * @param tag_id
-     * @return all the tags & all the data including the courses
+     * @return all the tag all the data including the courses
      */
 
     public function get_courses($tag_id)
@@ -256,7 +256,8 @@ class TagController extends Controller
                 LEFT JOIN users ON courses.user_id = users.id
                 LEFT JOIN categories ON courses.cat_id = categories.id
                 LEFT JOIN course_tag ON course_tag.course_id = courses.id
-                WHERE course_tag.tag_id = $tag_id"));
+                WHERE course_tag.tag_id = $tag_id
+                Group By courses.id"));
                 foreach ($courses as $course) {
                     $course_id = $course->{'id'};
                     $course->{'languages'} = array();
