@@ -133,3 +133,6 @@ Route::post('/inser_favorit', [UserFavoriteController::class, 'creat_link']);
 
 #the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied)
 Route::get('/user_courses/{status}', [CourseController::class, 'get_onhold_courses']);
+
+#the ADMIN APROVING COURSE it gives the courses based on the status (oh_hold, verified, denied) for ((((a specific user))))
+Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_onhold_courses_for_user']);
