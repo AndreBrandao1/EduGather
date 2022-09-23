@@ -126,7 +126,7 @@ Route::get('/languages', [LanguageController::class, 'get_all']);
 Route::get('/trainer/{id}', [UserController::class, 'get_courses']);
 
 #get the users for the ADMIN
-Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'admin_get_users']);
+Route::get('/get_users_admin/{role}/{status}', [UserController::class, 'get_users_admin']);
 
 #Route to insert/delete a new user-favorite id takes two inputes ((course_id & user_id))
 Route::post('/inser_favorit', [UserFavoriteController::class, 'creat_link']);
@@ -140,6 +140,5 @@ Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_on
 #admine aprove or deny or change the value of any course
 Route::post('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
 
-#admin get all trainers with a specific status
-
 #admin change trainers's status for a spe trainer
+Route::post('aprove_trainer/{trainer_id}/{new_status}', [UserController::class, 'aprove_trainer']);
