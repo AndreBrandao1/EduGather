@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('cou_title');
-            $table->string('cou_description');
+            $table->text('cou_description');
             $table->string('cou_logo');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cat_id');
