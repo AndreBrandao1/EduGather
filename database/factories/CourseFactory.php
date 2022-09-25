@@ -19,10 +19,9 @@ class CourseFactory extends Factory
     {
         
         return [
-            
-            'cou_title' => fake()->sentence($nbWords = 6, $variableNbWords = true),
-            'cou_description' => fake()->sentence(3, true),
-            'cou_description' => fake()->unique()->safeEmail(),
+
+            'cou_title' => fake()->sentence($nbWords = 2, $variableNbWords = true),
+            'cou_description' => fake()->sentence(35, true),
             'cou_logo' => fake()->imageUrl(),
             'user_id' => fake()->numberBetween(1, 10),
             'cat_id' => fake()->numberBetween(1, 5),
