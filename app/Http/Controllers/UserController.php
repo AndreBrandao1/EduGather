@@ -187,5 +187,17 @@ class UserController extends Controller
         return $user;
     }
 
+    /**
+     * @param trainer_id, $new_status
+     */
+    public function aprove_trainer($trainer_id, $new_status)
+    {
+        $msg = "allowed status are verified, rejected, on_hold";
+        if (($new_status == 'aproved') || ($new_status == 'rejected') || ($new_status == 'on_hold')) {
+            DB::select(DB::raw("UPDATE users SET status = '$new_status' WHERE users.id = '$trainer_id'"));
+            $msg = "trainer: $trainer_id status is updated to $new_status";
+        }
+        return response($msg);
+    }
   
 }
