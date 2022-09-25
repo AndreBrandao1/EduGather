@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             ContactSeeder::class,
         ]);
         \App\Models\User::factory(100)->create();
-        \App\Models\Course::factory(10)->create();
+        \App\Models\Course::factory(50)->create();
         $this->call([
             CourseTagSeeder::class,
         ]);
@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             
         ]);
         \App\Models\Contact::factory(100)->create();
+        \App\Models\LanguageCourse::factory(10)->create();
+        \App\Models\CourseTag::factory(10)->create();
 
     }
 }
