@@ -17,7 +17,11 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            //
+
+            'demander_id' => fake()->numberBetween(1, 137),
+            'receiver_id' => fake()->numberBetween(1, 137),
+            'contact_status' => "on_hold",
+
         ];
     }
 }

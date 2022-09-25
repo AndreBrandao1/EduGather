@@ -22,17 +22,22 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             CatTagSeeder::class,
             CourseSeeder::class,
-            CourseTagSeeder::class,
             LanguageSeeder::class,
             LanguageCourseSeeder::class,
             ContactSeeder::class,
         ]);
         \App\Models\User::factory(100)->create();
-
+        \App\Models\Course::factory(10)->create();
+        $this->call([
+            CourseTagSeeder::class,
+        ]);
         \App\Models\User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
+            
         ]);
+        \App\Models\Contact::factory(100)->create();
+
     }
 }
