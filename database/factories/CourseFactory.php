@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CourseFactory extends Factory
 {
+    
     /**
      * Define the model's default state.
      *
@@ -16,13 +17,15 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
+        
         return [
+            
             'cou_title' => fake()->sentence($nbWords = 6, $variableNbWords = true),
-            'cou_description' => fake()->realText(200),
+            'cou_description' => fake()->sentence(3, true),
             'cou_description' => fake()->unique()->safeEmail(),
             'cou_logo' => fake()->imageUrl(),
-            'user_id' => fake()->randomDigitNot(1),
-            'cat_id' => fake()->shuffle(array(1, 2, 3, 4, 5), 1),
+            'user_id' => fake()->numberBetween(1, 10),
+            'cat_id' => fake()->numberBetween(1, 5),
             'cou_statue' => 'verified', 
             
         ];

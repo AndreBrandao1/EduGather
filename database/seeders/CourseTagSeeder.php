@@ -17,7 +17,10 @@ class CourseTagSeeder extends Seeder
     public function run()
     {
         DB::table('course_tag')->insert([
-            ['course_id' => 1, 'tag_id' => 1],['course_id' => 1, 'tag_id' => 2], ['course_id' => 1, 'tag_id' => 3], ['course_id' => 2, 'tag_id' => 2],
+            ['course_id' => 1, 'tag_id' => 1],
+            ['course_id' => 1, 'tag_id' => 2],
+            ['course_id' => 1, 'tag_id' => 3],
+            ['course_id' => 2, 'tag_id' => 2],
             ['course_id' => 2, 'tag_id' => 1],
             ['course_id' => 2, 'tag_id' => 4],
             ['course_id' => 3, 'tag_id' => 3],
@@ -48,7 +51,32 @@ class CourseTagSeeder extends Seeder
             ['course_id' => 14, 'tag_id' => 16],
             ['course_id' => 15, 'tag_id' => 16],
             ['course_id' => 15, 'tag_id' => 17],
-            
+            ['course_id' => 16, 'tag_id' => 1],
+            ['course_id' => 16, 'tag_id' => 2],
+            ['course_id' => 16, 'tag_id' => 3],
+            ['course_id' => 17, 'tag_id' => 1],
+            ['course_id' => 17, 'tag_id' => 2],
+            ['course_id' => 17, 'tag_id' => 3],
+            ['course_id' => 18, 'tag_id' => 1],
+            ['course_id' => 18, 'tag_id' => 2],
+            ['course_id' => 18, 'tag_id' => 4],
+            ['course_id' => 18, 'tag_id' => 2],
+            ['course_id' => 19, 'tag_id' => 1],
+            ['course_id' => 19, 'tag_id' => 4],
+            ['course_id' => 19, 'tag_id' => 2],
+            ['course_id' => 20, 'tag_id' => 1],
+            ['course_id' => 20, 'tag_id' => 4],
+            ['course_id' => 21, 'tag_id' => 2],
+            ['course_id' => 21, 'tag_id' => 1],
+            ['course_id' => 22, 'tag_id' => 4],
+            ['course_id' => 22, 'tag_id' => 2],
+            ['course_id' => 23, 'tag_id' => 1],
+            ['course_id' => 23, 'tag_id' => 4],
+            ['course_id' => 24, 'tag_id' => 2],
+            ['course_id' => 24, 'tag_id' => 3],
+            ['course_id' => 25, 'tag_id' => 2],
+            ['course_id' => 25, 'tag_id' => 1],
+
 
         ]);
     }
