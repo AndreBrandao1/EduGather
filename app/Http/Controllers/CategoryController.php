@@ -227,8 +227,8 @@ class CategoryController extends Controller
 
 
         $cats = DB::select(DB::raw(
-            "SELECT categories.id, cat_title, cat_description, cat_logo
-            From categories"
+            "SELECT C.id, C.cat_title, C.cat_description, C.cat_logo
+            From categories AS C"
         ));
         foreach ($cats as $cat) {
             $cat_id = $cat->{'id'};
