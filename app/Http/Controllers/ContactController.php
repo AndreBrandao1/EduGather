@@ -134,6 +134,11 @@ class ContactController extends Controller
         }
     }
 
+    #aproving the relation ship or disaproving it for the teacher or the student from the dashboard
+    public function aprove_disaprove($relation_id, $new_status)
+    {
+        DB::select(DB::raw("UPDATE contacts SET contact_status = '$new_status' WHERE id = '$relation_id'"));
+    }
 
     public function get_contact_for_trainer($user, $status)
     {

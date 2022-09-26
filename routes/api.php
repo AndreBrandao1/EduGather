@@ -157,5 +157,9 @@ Route::get('/get_contact_status/{sender}/{reciever}', [ContactController::class,
 #changing the status of a relationship  requires three inputs: sender, reciever and $new_status which can be: aproved, on_hold, denied
 Route::post('/update_contact_status/{sender}/{reciever}/{status}', [ContactController::class, 'change_contact_status']);
 
-#changing the status of a relationship  requires three inputs: sender, reciever and $new_status which can be: aproved, on_hold, denied
+#changing the status of a relationship  requires two inputs: teatcher and $new_status which can be: aproved, on_hold, denied
 Route::get('/get_contact_for_trainer/{user}/{status}', [ContactController::class, 'get_contact_for_trainer']);
+
+
+#aproving or disaproving a recieved realtionship for anyone including the students the status are ((((approved, denied, on)gold)))
+Route::get('/aprove_disaprove/{relation_id}/{new_status}', [ContactController::class, 'aprove_disaprove']);
