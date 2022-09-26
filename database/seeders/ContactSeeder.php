@@ -20,7 +20,7 @@ class ContactSeeder extends Seeder
             [
                 'demander_id' => 1,
                 'receiver_id' => 2,
-                'contact_status' => 'approved'
+                'contact_status' => 'verified'
             ],
             [
                 'demander_id' => 2,
@@ -35,7 +35,7 @@ class ContactSeeder extends Seeder
             [
                 'demander_id' => 4,
                 'receiver_id' => 6,
-                'contact_status' => 'approved'
+                'contact_status' => 'verified'
             ],
             [
                 'demander_id' => 5,
@@ -50,7 +50,7 @@ class ContactSeeder extends Seeder
             [
                 'demander_id' => 9,
                 'receiver_id' => 1,
-                'contact_status' => 'approved'
+                'contact_status' => 'verified'
             ],
 
             [
