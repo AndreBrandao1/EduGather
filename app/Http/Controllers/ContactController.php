@@ -143,10 +143,12 @@ class ContactController extends Controller
 
     public function get_contact_for_trainer($user, $status)
     {
-        $relations =  DB::select(DB::raw("SELECT C.demander_id AS trainer, U.first_name, U.last_name, U.email, C.id AS relation_id, C.receiver_id
+        $relations =  DB::select(DB::raw("SELECT U.first_name, U.last_name, U.email, C.id AS relation_id, C.receiver_id
         FROM users AS U
-        JOIN contacts AS C ON U.id = C.receiver_id
-        WHERE C.demander_id = $user AND C.contact_status = '$status'"));
+        LEFT JOIN contacts AS C ON U.id = C.demander_id
+        LEFT  JOIN users ON U.id = C.receiver_id
+        WHERE C.receiver_id = {$user} AND C.contact_status = '{$status}'"));
+
         return response()->json($relations);
     }
 
