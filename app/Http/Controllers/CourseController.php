@@ -127,7 +127,8 @@ class CourseController extends Controller
             $languages = $request->languages;
         }
         if ($languages) {
-            foreach ($languages as $lan) {
+            $languages1 = explode(",", $languages);
+            foreach ($languages1 as $lan) {
                 DB::select(DB::raw("INSERT INTO language_course (language_id, course_id) VALUES ('$course_id', '$lan');"));
             }
         }
