@@ -138,6 +138,7 @@ class ContactController extends Controller
     public function aprove_disaprove($relation_id, $new_status)
     {
         DB::select(DB::raw("UPDATE contacts SET contact_status = '$new_status' WHERE id = '$relation_id'"));
+        return "the {$relation_id} is {$new_status}";
     }
 
     public function get_contact_for_trainer($user, $status)
