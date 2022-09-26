@@ -111,7 +111,7 @@ class CourseController extends Controller
             "cat_id" => $request->cat_id
         ]);
         $tags = [];
-        if ($request->languages) {
+        if ($request->tags) {
             $tags = $request->tags;
         }
         $course_id = DB::select(DB::raw("SELECT id FROM courses ORDER BY id DESC LIMIT 1"));

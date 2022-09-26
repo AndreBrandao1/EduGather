@@ -91,6 +91,7 @@ class CategoryController extends Controller
      */
     public function get_categories()
     {
+        $languages = DB::select(DB::raw("SELECT id AS lan_id, lan_title, lan_logo FROM languages"));
         $categories = DB::select(DB::raw(
             "SELECT CT.category_id AS cat_id, C.cat_title, C.cat_description, C.cat_logo, T.id AS tag_id, T.tag_title, T.tag_description, T.tag_logo
             FROM tags as T
@@ -117,6 +118,7 @@ class CategoryController extends Controller
         foreach ($categoryisf as $cat) {
             $cat_id = $cat->{'cat_id'};
             $cat->{'tags'} = $tags_by_category->{$cat_id} ?? [];
+            $cat->{'languages'} = $languages ?? [];
         }
 
         return response()->json($categoryisf);
