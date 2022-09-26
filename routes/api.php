@@ -143,7 +143,7 @@ Route::get('/user_courses/{status}/{user_id}', [CourseController::class, 'get_on
 Route::post('aprove_course/{course_id}/{new_status}', [CourseController::class, 'aprove_course']);
 
 #admin change trainers's status for a spe trainer ((on_hold, verified, rejected))
-Route::get('aprove_trainer/{trainer_id}/{new_status}', [UserController::class, 'aprove_trainer']);
+Route::post('aprove_trainer/{trainer_id}/{new_status}', [UserController::class, 'aprove_trainer']);
 
 
 ##routes for realtionships
