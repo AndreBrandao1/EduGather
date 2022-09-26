@@ -129,7 +129,7 @@ class CourseController extends Controller
         if ($languages) {
             $languages1 = explode(",", $languages);
             foreach ($languages1 as $lan) {
-                DB::select(DB::raw("INSERT INTO language_course (language_id, course_id) VALUES ('$course_id', '$lan');"));
+                DB::select(DB::raw("INSERT INTO language_course (course_id, language_id) VALUES ('$course_id', '$lan');"));
             }
         }
     }
