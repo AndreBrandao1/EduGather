@@ -162,4 +162,4 @@ Route::get('/get_contact_for_trainer/{user}/{status}', [ContactController::class
 
 
 #aproving or disaproving a recieved realtionship for anyone including the students the status are ((((approved, denied, on)gold)))
-Route::get('/aprove_disaprove/{relation_id}/{new_status}', [ContactController::class, 'aprove_disaprove']);
+Route::post('/aprove_disaprove/{relation_id}/{new_status}', [ContactController::class, 'aprove_disaprove']);
