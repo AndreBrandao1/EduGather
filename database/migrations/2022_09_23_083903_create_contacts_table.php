@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('demander_id');
             $table->unsignedBigInteger('receiver_id');
-            $table->enum('contact_status', ['on_hold', 'approved', 'denied']);
+            $table->enum('contact_status', ['on_hold', 'verified', 'denied']);
             $table->foreign('demander_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
         });

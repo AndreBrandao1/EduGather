@@ -100,8 +100,8 @@ class ContactController extends Controller
      */
     public function aprove_trainer($trainer_id, $new_status)
     {
-        $msg = "allowed status are verified, rejected, on_hold";
-        if (($new_status == 'aproved') || ($new_status == 'rejected') || ($new_status == 'on_hold')) {
+        $msg = "allowed status are verified, denied, on_hold";
+        if (($new_status == 'verified') || ($new_status == 'denied') || ($new_status == 'on_hold')) {
             DB::select(DB::raw("UPDATE users SET status = '$new_status' WHERE users.id = '$trainer_id'"));
             $msg = "trainer: $trainer_id status is updated to $new_status";
         }
@@ -155,7 +155,7 @@ class ContactController extends Controller
     public function change_contact_status($sender, $reciever, $status)
     {
         //check if the status is correct
-        if (($status == 'aproved') || (($status == 'on_hold')) || ($status == 'denied')) {
+        if (($status == 'verified') || (($status == 'on_hold')) || ($status == 'denied')) {
             //check the relationship
             $s_r = DB::select(DB::raw("SELECT id FROM contacts WHERE demander_id = '$sender' AND receiver_id = '$reciever'"));
             $r_s = DB::select(DB::raw("SELECT id FROM contacts WHERE demander_id = '$reciever' AND receiver_id = '$sender'"));
