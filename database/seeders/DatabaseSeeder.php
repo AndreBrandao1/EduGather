@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
             
         ]);
         \App\Models\Contact::factory(100)->create();
-        \App\Models\LanguageCourse::factory(10)->create();
-        \App\Models\CourseTag::factory(10)->create();
+        \App\Models\LanguageCourse::factory(100)->create();
+        \App\Models\CourseTag::factory(100)->create();
 
     }
 }

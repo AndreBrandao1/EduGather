@@ -176,7 +176,7 @@ class UserController extends Controller
     public function get_users_admin($role, $status)
     {
         $users = [];
-        $users =  DB::select(DB::raw("SELECT * FROM users AS U WHERE U.role = '$role' AND U.status = '$status'"));
+        $users =  DB::select(DB::raw("SELECT U.id, U.first_name, U.last_name FROM users AS U WHERE U.role = '$role' AND U.status = '$status'"));
         return response()->json($users);
     }
 

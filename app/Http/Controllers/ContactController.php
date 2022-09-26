@@ -134,6 +134,19 @@ class ContactController extends Controller
         }
     }
 
+
+    public function get_contact_for_trainer($user, $status)
+    {
+        $relations =  DB::select(DB::raw("SELECT U.id AS student_id, U.first_name, U.last_name, U.email, C.id AS relation_id
+        FROM users AS U
+        JOIN contacts AS C ON U.id = C.receiver_id
+        WHERE C.demander_id = $user AND C.contact_status = '$status'"));
+        return response()->json($relations);
+    }
+
+    
+
+
     public function change_contact_status($sender, $reciever, $status)
     {
         //check if the status is correct

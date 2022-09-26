@@ -141,6 +141,8 @@ class CourseController extends Controller
      */
     public function show($id)
     {
+
+        $tags = [];
         $tags = DB::select(DB::raw("SELECT courses.id AS course_id, tags.id AS tag_id, tags.tag_title,tags.tag_description, tags.tag_logo, users.id As user_id, users.first_name, users.last_name
         FROM tags
         LEFT JOIN course_tag ON tags.id=course_tag.tag_id
@@ -161,7 +163,7 @@ class CourseController extends Controller
             }
             $tags_by_course->{$course_id}[] = $tag;
 
-
+            $languages = (object)[];
             $languages = DB::select(DB::raw("SELECT courses.id AS course_id, languages.id AS language_id, languages.lan_title, lan_logo, users.id
                 FROM languages
                 LEFT JOIN language_course ON languages.id=language_course.language_id
@@ -180,7 +182,7 @@ class CourseController extends Controller
                 }
                 $languages_by_course->{$course_id}[] = $language;
             }
-            $course = (object)[];
+
             $courses = DB::select(DB::raw("SELECT courses.id, cou_logo, cou_statue,cou_title, cou_description, users.id AS user_id, users.first_name, users.last_name, categories.id AS cat_id, categories.cat_title 
             FROM courses 
             LEFT JOIN users ON courses.user_id = users.id
@@ -188,22 +190,28 @@ class CourseController extends Controller
             LEFT JOIN course_tag ON course_tag.course_id = courses.id
             WHERE courses.id = $id
             Group BY courses.id"));
-            foreach ($courses as $course) {
-                $course_id = $course->{'id'};
-                $course->{'languages'} = array();
-                if (isset($languages_by_course->{$course_id})) {
-                    $course->{'languages'} = $languages_by_course->{$course_id};
+            if ($courses) {
+                foreach ($courses as $course) {
+                    $course_id = $course->{'id'};
+                    $course->{'languages'} = array();
+                    if (isset($languages_by_course->{$course_id})) {
+                        $course->{'languages'} = $languages_by_course->{$course_id};
+                    }
+                    $course->{'tags'} = array();
+                    if (isset($tags_by_course->{$course_id})) {
+                        $course->{'tags'} = $tags_by_course->{$course_id};
+                    }
                 }
-                $course->{'tags'} = array();
-                if (isset($tags_by_course->{$course_id})) {
-                    $course->{'tags'} = $tags_by_course->{$course_id};
-                }
-            }
+            } else             $courses = (object)[];
+
         }
 
 
         return response()->json($courses);
     }
+
+
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -537,7 +545,4 @@ CATA.cat_logo as \"cat_logo\"
         $course_id = DB::select(DB::raw("SELECT id FROM courses ORDER BY id DESC LIMIT 1"));
         return response();
     }
-
-
-    
 }
