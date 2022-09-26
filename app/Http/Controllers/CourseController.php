@@ -190,7 +190,7 @@ class CourseController extends Controller
             LEFT JOIN categories ON courses.cat_id = categories.id
             LEFT JOIN course_tag ON course_tag.course_id = courses.id
             WHERE courses.id = $id
-            Group BY courses.id"));
+            "));
             if ($courses) {
                 foreach ($courses as $course) {
                     $course_id = $course->{'id'};
@@ -204,7 +204,6 @@ class CourseController extends Controller
                     }
                 }
             } else             $courses = (object)[];
-
         }
 
 
@@ -212,7 +211,7 @@ class CourseController extends Controller
     }
 
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
